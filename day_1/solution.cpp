@@ -24,8 +24,8 @@ optional<int> mult_pair(const unordered_multiset<int> &vals, const int target)
         diffs[val] = target - val;
     }
 
-    // search through all diffs and see if any exists in the original set of
-    // vals, if so the total sums to target
+    // Search through all diffs and see if any exists in the original set of
+    // vals, if so the total sums to target.
     for (const auto &d : diffs) {
         auto search = diffs.find(d.second);
         if (search != diffs.end()) {
@@ -39,7 +39,7 @@ optional<int> mult_pair(const unordered_multiset<int> &vals, const int target)
 
 int main()
 {
-    // read integer values from file into multiset
+    // Read integer values from file into multiset.
     ifstream data{"input.txt"};
     unordered_multiset<int> vals;
     int val;
@@ -47,7 +47,7 @@ int main()
         vals.insert(val);
     }
 
-    // Part 1: find two values that sum to TARGET and output their multiple
+    // Part 1: find two values that sum to TARGET and output their multiple.
     const int TARGET = 2020;
     auto result = mult_pair(vals, TARGET);
     if (!result) {
@@ -58,17 +58,17 @@ int main()
     }
     std::cout << *result << std::endl;
 
-    // Part 2: find three values that sum to TARGET and output their multiple
+    // Part 2: find three values that sum to TARGET and output their multiple.
 
-    // copy vals so it can be modified during the loop without the iterator
+    // Copy vals so it can be modified during the loop without invalidating the
+    // iterator.
     auto tmp_vals = vals;
 
     for (const auto v1 : vals) {
         // Reuse solution from Part 1: For each value, form a new set that does
-        // not contain the value and a new target. Then we only need to find
-        // two values that sum to this new target.
-        //
-        // This is an average case n^2 solution.
+        // not contain the value and a new target that is the original target
+        // minus the value. Then we only need to find two values that sum to
+        // this new target.
         auto v1_target = TARGET - v1;
         tmp_vals.extract(v1);
         auto result = mult_pair(tmp_vals, v1_target);
