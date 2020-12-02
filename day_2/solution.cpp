@@ -11,27 +11,27 @@ struct Policy {
     int lower;
     int upper;
     char c;
+};
 
-    friend istream &operator>>(istream &is, Policy &p)
-    {
-        char sep;
+istream &operator>>(istream &is, Policy &p)
+{
+    char sep;
 
-        is >> p.lower;
+    is >> p.lower;
 
-        is >> sep;
-        if (sep != '-') {
-            is.putback(sep);
-            is.clear(std::istream::failbit);
-            return is;
-        }
-
-        is >> p.upper;
-
-        is >> p.c;
-
+    is >> sep;
+    if (sep != '-') {
+        is.putback(sep);
+        is.clear(std::istream::failbit);
         return is;
     }
-};
+
+    is >> p.upper;
+
+    is >> p.c;
+
+    return is;
+}
 
 int main()
 {
